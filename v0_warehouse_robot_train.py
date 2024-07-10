@@ -29,13 +29,11 @@ def run(episodes, is_training=True, render=False):
     target_space_x = np.linspace(env.observation_space.low[3], env.observation_space.high[3], env.unwrapped.grid_rows) 
     target_space_y = np.linspace(env.observation_space.low[4], env.observation_space.high[4], env.unwrapped.grid_cols) 
 
-    print(pos_space_x)
-    print(pos_space_y)
-    print(angle_space)
-    print(target_space_x)
-    print(target_space_y)
-    
-    #is this this on?
+    # print(pos_space_x)
+    # print(pos_space_y)
+    # print(angle_space)
+    # print(target_space_x)
+    # print(target_space_y)
 
     if(is_training):
         q = np.zeros((len(pos_space_x), len(pos_space_y), len(angle_space), len(target_space_x), len(target_space_y), env.action_space.n)) # init a big array
@@ -58,8 +56,17 @@ def run(episodes, is_training=True, render=False):
         state_x = np.digitize(state[0], pos_space_x)
         state_y = np.digitize(state[1], pos_space_y)
         state_a = np.digitize(state[2], angle_space)
-        state_tx = target_space_x
-        state_ty = target_space_y
+        state_tx = np.digitize(state[3], target_space_x)
+        state_ty = np.digitize(state[4], target_space_y)
+
+        # print(state[3])
+        # print(state[4])
+
+        # print(state_x)
+        # print(state_y)
+        # print(state_a)
+        # print(state_tx)
+        # print(state_ty)
 
         terminated = False          # True when reached goal
 
@@ -77,10 +84,14 @@ def run(episodes, is_training=True, render=False):
             new_state_x = np.digitize(new_state[0], pos_space_x)
             new_state_y = np.digitize(new_state[1], pos_space_y)
             new_state_a = np.digitize(new_state[2], angle_space)
-            new_state_tx = target_space_x
-            new_state_ty = target_space_y
+            new_state_tx = np.digitize(new_state[3], target_space_x)
+            new_state_ty = np.digitize(new_state[4], target_space_y)
 
-            print(new_state)
+            # print(new_state_x)
+            # print(new_state_y)
+            # print(new_state_a)
+            # print(new_state_tx)
+            # print(new_state_ty)            
 
             if is_training:
                 q[state_x, state_y, state_a, state_tx, state_ty] = q[state_x, state_y, state_a, state_tx, state_ty] + learning_rate_a * (
