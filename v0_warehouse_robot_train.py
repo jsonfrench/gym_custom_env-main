@@ -35,6 +35,7 @@ def run(episodes, is_training=True, render=False):
     print(target_space_x)
     print(target_space_y)
     
+    #is this this on?
 
     if(is_training):
         q = np.zeros((len(pos_space_x), len(pos_space_y), len(angle_space), len(target_space_x), len(target_space_y), env.action_space.n)) # init a big array
